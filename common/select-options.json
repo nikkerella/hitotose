@@ -1,0 +1,36 @@
+{
+    "platforms": [
+      "PC",
+      "Nintendo Switch",
+      "PlayStation",
+      "Xbox",
+      "Android / iOS"
+    ],
+    "statuses": [
+      "Played",
+      "Playing",
+      "ToPlay"
+    ],
+    "genres": [
+        "Action",
+        "Adventure",
+        "ARPG",
+        "Card",
+        "Fighting",
+        "FPS",
+        "MMORPG",
+        "MOBA",
+        "Party",
+        "Racing",
+        "Rhythm",
+        "RPG",
+        "RTS",
+        "Sandbox",
+        "Simulation",
+        "Sports",
+        "Survival",
+        "TPS",
+        "Visual Novel",
+        "Puzzle"
+    ]
+  }
