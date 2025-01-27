@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package game;
+
+option go_package = "../protobuf/game;game";
+
+service GameService {
+    rpc QueryByStatus (QueryReq) returns (QueryResp);
+}
+
+message QueryReq {
+    string status = 1;
+}
+
+message QueryResp {
+    repeated Game games = 1;
+}
+
+message Game {
+    string id = 1;
+    string title = 2;
+}

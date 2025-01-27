@@ -25,6 +25,8 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "core-js": "^3.37.1",
+    "google-protobuf": "^3.21.4",
+    "grpc-web": "^1.5.0",
     "roboto-fontface": "*",
     "vue": "^3.4.31",
     "vuedraggable": "^4.1.0",
