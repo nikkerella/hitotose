@@ -8,6 +8,7 @@ import (
 
 	pb "github.com/nikkerella/hitotose/gin/rpc/protobuf/game"
 
+	mongo "github.com/nikkerella/hitotose/gin/db/mongo"
 	svc "github.com/nikkerella/hitotose/gin/svc/game"
 	"google.golang.org/grpc"
 )
@@ -22,6 +23,7 @@ func (s *GameServiceServer) QueryByStatus(ctx context.Context, req *pb.QueryReq)
 	// Fetch the data from your MongoDB service based on the status from the request
 	status := req.GetStatus()
 
+	mongo.Init()
 	service := svc.NewService()
 	games := service.ByStatusRpc(status)
 
@@ -40,7 +42,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	// Register the GameServiceServer to handle the RPC requests
-	game.RegisterGameServiceServer(grpcServer, &GameServiceServer{})
+	pb.RegisterGameServiceServer(grpcServer, &GameServiceServer{})
 
 	// Start the server
 	fmt.Println("gRPC server is running on port :50051")
