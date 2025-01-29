@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 
-	pb "grpc/protobuf/game"
+	pb "github.com/nikkerella/hitotose/gin/rpc/protobuf/game"
 
 	svc "github.com/nikkerella/hitotose/gin/svc/game"
 	"google.golang.org/grpc"
@@ -22,21 +22,11 @@ func (s *GameServiceServer) QueryByStatus(ctx context.Context, req *pb.QueryReq)
 	// Fetch the data from your MongoDB service based on the status from the request
 	status := req.GetStatus()
 
-	// Assuming svc.ByStatus returns a list of games
-	games := svc.ByStatus(status)
-
-	// Map the results to the gRPC response
-	var gameList []*game.Game
-	for _, g := range games {
-		gameList = append(gameList, &game.Game{
-			Id:    g.ID,
-			Title: g.Title,
-			Genre: g.Genre,
-		})
-	}
+	service := svc.NewService()
+	games := service.ByStatusRpc(status)
 
 	// Return the games in the response
-	return &game.QueryResponse{Games: gameList}, nil
+	return &pb.QueryResp{Games: games}, nil
 }
 
 func main() {

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package game;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "../protobuf/game;game";
 
 service GameService {
@@ -19,4 +21,13 @@ message QueryResp {
 message Game {
     string id = 1;
     string title = 2;
+    string genre = 3;
+    string platform = 4;
+    string developer = 5;
+    string publisher = 6;
+    string status = 7;
+    int32 play_time = 8;
+    int32 rating = 9;
+    google.protobuf.Timestamp created_at = 10;
+    google.protobuf.Timestamp updated_at = 11;
 }

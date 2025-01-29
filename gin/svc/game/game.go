@@ -7,6 +7,7 @@ import (
 
 	mdb "github.com/nikkerella/hitotose/gin/db/mongo"
 	"github.com/nikkerella/hitotose/gin/model/game"
+	pb "github.com/nikkerella/hitotose/gin/rpc/protobuf/game"
 
 	mgo "github.com/nikkerella/monggo"
 
@@ -20,6 +21,7 @@ type Service interface {
 	ByID(id any) game.Game
 	ByPlaying() []game.Game
 	ByStatus(status game.Status) []game.Game
+	ByStatusRpc(status string) []*pb.Game
 	Create(g game.Game) error
 	Delete(id string) error
 	Query(kw string, pf game.Platform, st game.Status, page, limit int) ([]game.Game, int)
@@ -91,6 +93,22 @@ func byRankingNo(rNo int) game.Game {
 func (s *service) ByStatus(status game.Status) []game.Game {
 	var filter bson.D
 	var games []game.Game
+
+	// Default status is "playing"
+	if len(status) != 0 {
+		filter = bson.D{primitive.E{Key: "status", Value: status}}
+	} else {
+		filter = bson.D{primitive.E{Key: "status", Value: game.PLAYING}}
+	}
+
+	sort := bson.D{primitive.E{Key: "title", Value: 1}}
+	mgo.FindMany(mdb.Games, &games, filter, sort)
+	return games
+}
+
+func (s *service) ByStatusRpc(status string) []*pb.Game {
+	var filter bson.D
+	var games []*pb.Game
 
 	// Default status is "playing"
 	if len(status) != 0 {
